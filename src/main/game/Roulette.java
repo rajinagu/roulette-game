@@ -51,10 +51,20 @@ public class Roulette {
             // Split this string into separate fields
             String[] fields = s.split(" ");
 
-            // Build a product object from the fields
-            BetDetails betDetails = new BetDetails(fields[0], fields[1], Double.parseDouble(fields[2]));
+            //Check the Betting Player in the Players list
+            //If not found throw error
+            boolean betPersonExists = players.stream().map(Player::getName).anyMatch(fields[0]::equals);
 
-            betList.add(betDetails);
+            if(!betPersonExists){
+                System.out.println("Player "+ fields[0] + " Not exist in the list of players. Please enter a correct name");
+            }else{
+                // Build a product object from the fields
+                BetDetails betDetails = new BetDetails(fields[0], fields[1], Double.parseDouble(fields[2]));
+
+                betList.add(betDetails);
+            }
+
+
         }
 
 
@@ -148,6 +158,8 @@ public class Roulette {
                     }
                 }
             }, 30, 30, java.util.concurrent.TimeUnit.SECONDS);
+
+            //Stop the executor Service during progrm Shutdown
 
 
     }
